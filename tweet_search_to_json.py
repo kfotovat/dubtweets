@@ -42,9 +42,10 @@ auth.set_access_token(access_token_key, access_token_secret)
 json_api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
 
 # pass either items_count to Cursor.items() or page_count to Cursor.pages()
-items_count = 10
+# max in initial go is 100
+items_count = 10000
 page_count = None
-params = '@money23green+since:2017-04-24'
+params = '@money23green%20since:2017-04-24%20tweet_mode=extended%20sort-by=created_at-asc'
 
 ##########################################
 # Using the tweepy Cursor
@@ -61,10 +62,11 @@ params = '@money23green+since:2017-04-24'
 ##########################################
 # Using the tweepy JSONParser
 ##########################################
-twitterSearch = json_api.search(q=params)
+twitterSearch = json_api.search(q=params,count=items_count)
 statuses = twitterSearch['statuses']
 for status in statuses:
 	print status['created_at']
+
 	print status['user']['screen_name']
 	print status['text']
 # for k, v in statuses[3]:
@@ -72,10 +74,13 @@ for status in statuses:
 # pp = pprint.PrettyPrinter(indent=4)
 # pp.pprint(statuses[5])
 
+# print type(status)
+# print type(statuses)
+# print len(statuses)
+# save_to_json(statuses)
 print type(status)
 print type(statuses)
 print len(statuses)
-save_to_json(statuses)
 
 # key dictionary fields
 # status_object['id']

@@ -46,3 +46,4 @@ node_modules
 *~
 credentials.js
 credentials.py
+*tweets.json
